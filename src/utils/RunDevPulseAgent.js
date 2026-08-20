@@ -1,7 +1,7 @@
 import ai from "./gemini.js";
 import dispatchGithubIssue from "./github-octokit.js";
-import {Type} from "@google/genai";
-import firedb from'./firebase.js';
+import { Type } from "@google/genai";
+import firedb from "./firebase.js";
 
 // ---------------------------------------------------------------------------
 // 4. Core Autonomous Agent Workflow
@@ -57,10 +57,16 @@ ${raw_log}`,
     },
   });
 
-  const analysis = JSON.parse(geminiResponse.text);
-  console.log(
-    `✅ [Gemini] Diagnosis complete: "${analysis.title}" [Severity: ${analysis.severity}]`,
-  );
+  let analysis;
+  try {
+    analysis = JSON.parse(geminiResponse.text);
+    console.log(
+      `✅ [Gemini] Diagnosis complete: "${analysis.title}" [Severity: ${analysis.severity}]`,
+    );
+  } catch (parseErr) {
+    console.error("❌ Failed to parse Gemini structured JSON:", parseErr);
+    return; // Abort gracefully without crashing node process
+  }
 
   // Step B: Dispatch Automated GitHub Issue
 

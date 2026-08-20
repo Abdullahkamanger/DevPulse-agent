@@ -21,7 +21,8 @@ for (const envVar of requiredEnvVars) {
 }
 
 const app = express();
-app.use(express.json());
+// 1mb sonce this project is in develpment
+app.use(express.json({limit: "1mb"}));
 
 app.use("/api/v1", routes);
 
