@@ -1,0 +1,31 @@
+import "dotenv/config";
+import express from "express";
+import routes from "./src/routes/route.js";
+
+
+const requiredEnvVars = [
+  "GEMINI_API_KEY",
+  "GITHUB_TOKEN",
+  "GITHUB_OWNER",
+  "GITHUB_REPO",
+  "FIREBASE_SERVICE_ACCOUNT_KEY",
+  "GEMINI_MODEL",
+  
+];
+//to ensure no env var is missing
+for (const envVar of requiredEnvVars) {
+  if (!process.env[envVar]) {
+    console.error(`CRITICAL ERROR: Missing environment variable [${envVar}]`);
+    process.exit(1);
+  }
+}
+
+const app = express();
+app.use(express.json());
+
+app.use("/api/v1", routes);
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`DevPulse Agent server running on http://localhost:${PORT}`);
+});
