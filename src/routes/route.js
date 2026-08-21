@@ -5,7 +5,7 @@ const router = express.Router();
 
 /**
  * POST /api/v1/logs/crash
- * Ingests a raw crash log and executes the agent pipeline asynchronously.
+ * Ingests a raw crash log and execute the agent pipeline asynchronously.
  */
 
 router.post("/logs/crash", ingestLog);

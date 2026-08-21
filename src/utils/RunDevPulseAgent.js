@@ -4,14 +4,14 @@ import { Type } from "@google/genai";
 import firedb from "./firebase.js";
 
 // ---------------------------------------------------------------------------
-// 4. Core Autonomous Agent Workflow
+//  Core Autonomous Agent Workflow
 // ---------------------------------------------------------------------------
 async function runDevPulseAgent({ service_name, environment, raw_log }) {
   console.log(
     `\n🤖 [DevPulse] Intercepted crash from "${service_name}" (${environment}). Generating diagnosis...`,
   );
 
-  // Step A: Call Gemini with Structured Output Constraints
+  //  Call Gemini with Structured Output Constraints
   const geminiResponse = await ai.models.generateContent({
     model: process.env.GEMINI_MODEL,
     contents: `You are DevPulse, an autonomous backend reliability engineer agent. Analyze the provided crash log and output a diagnostic object.
@@ -39,7 +39,7 @@ ${raw_log}`,
           },
           suggested_fix: {
             type: Type.STRING,
-            description: "Precise code snippet or patch fixing the issue",
+            description: "code snippet or patch fixing the issue",
           },
           prevention_tip: {
             type: Type.STRING,
@@ -68,7 +68,7 @@ ${raw_log}`,
     return; // Abort gracefully without crashing node process
   }
 
-  // Step B: Dispatch Automated GitHub Issue
+  // Dispatch Automated GitHub Issue
 
   const githubIssueUrl = await dispatchGithubIssue(
     service_name,
@@ -85,7 +85,7 @@ ${raw_log}`,
     );
   }
 
-  // Step C: Persist Audit Record to Firestore
+  //  Persist Audit Record to Firestore
   const docRef = firedb.collection("incidents").doc();
   const incidentRecord = {
     incident_id: docRef.id,

@@ -21,7 +21,7 @@ for (const envVar of requiredEnvVars) {
 }
 
 const app = express();
-// 1mb sonce this project is in develpment
+// Set a limit for incoming JSON payloads to prevent large requests from overwhelming the server
 app.use(express.json({limit: "1mb"}));
 
 app.use("/api/v1", routes);

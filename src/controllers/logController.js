@@ -21,10 +21,11 @@ export const ingestLog = async (req, res) => {
 
     // Run the agent pipeline in the background
 
-    const safeServiceName = typeof service_name === 'string' && service_name.trim() 
-  ? service_name.trim() 
-  : 'unknown-service';
-    
+    const safeServiceName =
+      typeof service_name === "string" && service_name.trim()
+        ? service_name.trim()
+        : "unknown-service";
+
     runDevPulseAgent({
       service_name: safeServiceName,
       environment: environment || "production",
