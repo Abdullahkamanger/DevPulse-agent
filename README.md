@@ -1,7 +1,7 @@
 # 🤖 DevPulse Agent
 
 > **Autonomous Backend Reliability & Log Triage Agent**  
-> *Built for the Google Cloud: All Things Agentic Hackathon (Taskmaster Category)*
+> *Built for the Google : All Things Agentic Hackathon (Taskmaster Category (managed by DevPost))*
 
 DevPulse Agent is an autonomous background reliability engine that intercepts raw server crash logs, diagnoses root causes using **Gemini**, generates actionable code fixes, and automatically dispatches structured tickets to **GitHub Issues** while persisting incident metadata to **Google Cloud Firestore**.
 
@@ -35,34 +35,13 @@ graph TD
 * **Structured Output Enforcement:** Uses strict `@google/genai` JSON schema definitions (`responseSchema`) to enforce zero-hallucination, auto-parsable diagnostic objects.
 * **Dual Persistence State:** Maintains real-time tracking links in Firestore alongside actionable issue records in GitHub.
 
-
-# Usage -- ## ⚡ Zero-Friction Production Integration
-
-DevPulse requires no manual developer interaction or log copying. Simply register a global error middleware inside your application server. When an uncaught exception occurs, the error trace is automatically streamed to DevPulse for instant analysis and issue generation.
-
-```javascript
-// Express.js Global Error Middleware
-app.use((err, req, res, next) => {
-  fetch('http://localhost:3000/api/v1/logs/crash', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      service_name: 'payment-service',
-      environment: 'production',
-      raw_log: err.stack
-    })
-  }).catch(() => {}); // Non-blocking execution
-
-  res.status(500).json({ error: 'Internal Server Error' });
-});
-```
 ---
 
 ## 🛠️ Tech Stack & Dependencies
 
 * **Runtime:** Node.js (ES Modules)
 * **Web Framework:** Express.js
-* **AI Engine:** Google GenAI SDK (`@google/genai`) using `gemini-2.5-flash` / `gemini-3.5-flash-lite`
+* **AI Engine:** Google GenAI SDK (`@google/genai`) using `gemini-3.5-flash-lite` ( any model of gemini can be used as required just change the `.env` Variable)
 * **Database:** Google Cloud Firestore (`firebase-admin`)
 * **Integrations:** GitHub REST API (`@octokit/rest`)
 
@@ -78,7 +57,7 @@ app.use((err, req, res, next) => {
 ### 2. Installation
 ```bash
 # Clone the repository
-git clone [https://github.com/Abdullahkamanger/DevPulse-agent.git](https://github.com/Abdullahkamanger/DevPulse-agent.git)
+git clone https://github.com/Abdullahkamanger/DevPulse-agent.git
 cd DevPulse-agent
 
 # Install dependencies
@@ -91,7 +70,7 @@ Create a `.env` file in the root folder using the structure below:
 ```env
 PORT=3000
 GEMINI_API_KEY=your_google_ai_studio_key
-GEMINI_MODEL=gemini-2.5-flash
+GEMINI_MODEL=gemini-3.5-flash-lite (or any other model)
 GITHUB_TOKEN=your_github_personal_access_token
 GITHUB_OWNER=Abdullahkamanger
 GITHUB_REPO=DevPulse_testing_repo
@@ -124,6 +103,27 @@ Query stored incident histories:
 ```bash
 curl http://localhost:3000/api/v1/incidents
 ```
+# Usage -- ## ⚡ Zero-Friction Production Integration
+
+DevPulse requires no manual developer interaction or log copying. Simply register a global error middleware inside your application server. When an uncaught exception occurs, the error trace is automatically streamed to DevPulse for instant analysis and issue generation.
+
+```javascript
+// Express.js Global Error Middleware
+app.use((err, req, res, next) => {
+  fetch('http://localhost:3000/api/v1/logs/crash', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      service_name: 'payment-service',
+      environment: 'production',
+      raw_log: err.stack
+    })
+  }).catch(() => {}); // Non-blocking execution
+
+  res.status(500).json({ error: 'Internal Server Error' });
+});
+```
+
 
 ---
 
