@@ -35,6 +35,27 @@ graph TD
 * **Structured Output Enforcement:** Uses strict `@google/genai` JSON schema definitions (`responseSchema`) to enforce zero-hallucination, auto-parsable diagnostic objects.
 * **Dual Persistence State:** Maintains real-time tracking links in Firestore alongside actionable issue records in GitHub.
 
+
+# Usage -- ## ⚡ Zero-Friction Production Integration
+
+DevPulse requires no manual developer interaction or log copying. Simply register a global error middleware inside your application server. When an uncaught exception occurs, the error trace is automatically streamed to DevPulse for instant analysis and issue generation.
+
+```javascript
+// Express.js Global Error Middleware
+app.use((err, req, res, next) => {
+  fetch('[https://your-devpulse-agent.onrender.com/api/v1/logs/crash](https://your-devpulse-agent.onrender.com/api/v1/logs/crash)', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      service_name: 'payment-service',
+      environment: 'production',
+      raw_log: err.stack
+    })
+  }).catch(() => {}); // Non-blocking execution
+
+  res.status(500).json({ error: 'Internal Server Error' });
+});
+```
 ---
 
 ## 🛠️ Tech Stack & Dependencies
