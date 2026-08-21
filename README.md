@@ -43,7 +43,7 @@ DevPulse requires no manual developer interaction or log copying. Simply registe
 ```javascript
 // Express.js Global Error Middleware
 app.use((err, req, res, next) => {
-  fetch('[https://your-devpulse-agent.onrender.com/api/v1/logs/crash](https://your-devpulse-agent.onrender.com/api/v1/logs/crash)', {
+  fetch('http://localhost:3000/api/v1/logs/crash', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
