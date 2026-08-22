@@ -1,5 +1,5 @@
 {
-  "name": "devpulse-agent",
+  "name": "CrashIntercept-agent",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

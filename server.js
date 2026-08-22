@@ -28,5 +28,5 @@ app.use("/api/v1", routes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`DevPulse Agent server running on http://localhost:${PORT}`);
+  console.log(`CrashIntercept Agent server running on http://localhost:${PORT}`);
 });
