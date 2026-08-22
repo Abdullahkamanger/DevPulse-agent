@@ -1,4 +1,4 @@
-# 🤖 DevPulse Agent
+# 🤖 CrashIntercept Agent
 
 > **Autonomous Backend Reliability & Log Triage Agent**  
 > *Built for the Google : All Things Agentic Hackathon (Taskmaster Category (managed by DevPost))*
