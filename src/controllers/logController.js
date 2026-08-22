@@ -1,4 +1,4 @@
-import runDevPulseAgent from "../utils/RunDevPulseAgent.js";
+import runCrashInterceptAgent from "../utils/RunCrashInterceptAgent.js";
 import firedb from "../utils/firebase.js";
 
 export const ingestLog = async (req, res) => {
@@ -16,7 +16,7 @@ export const ingestLog = async (req, res) => {
     res.status(202).json({
       success: true,
       message:
-        "Crash log accepted. DevPulse Agent is processing asynchronously.",
+        "Crash log accepted. CrashIntercept Agent is processing asynchronously.",
     });
 
     // Run the agent pipeline in the background
@@ -26,12 +26,12 @@ export const ingestLog = async (req, res) => {
         ? service_name.trim()
         : "unknown-service";
 
-    runDevPulseAgent({
+    runCrashInterceptAgent({
       service_name: safeServiceName,
       environment: environment || "production",
       raw_log,
     }).catch((err) => {
-      console.error("❌ [DevPulse Agent Async Failure]:", err);
+      console.error("❌ [CrashIntercept Agent Async Failure]:", err);
     });
   } catch (error) {
     console.error("❌ [Endpoint Error]:", error);

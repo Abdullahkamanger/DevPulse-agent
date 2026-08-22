@@ -6,15 +6,15 @@ import firedb from "./firebase.js";
 // ---------------------------------------------------------------------------
 //  Core Autonomous Agent Workflow
 // ---------------------------------------------------------------------------
-async function runDevPulseAgent({ service_name, environment, raw_log }) {
+async function runCrashInterceptAgent({ service_name, environment, raw_log }) {
   console.log(
-    `\n🤖 [DevPulse] Intercepted crash from "${service_name}" (${environment}). Generating diagnosis...`,
+    `\n🤖 [CrashIntercept] Intercepted crash from "${service_name}" (${environment}). Generating diagnosis...`,
   );
 
   //  Call Gemini with Structured Output Constraints
   const geminiResponse = await ai.models.generateContent({
     model: process.env.GEMINI_MODEL,
-    contents: `You are DevPulse, an autonomous backend reliability engineer agent. Analyze the provided crash log and output a diagnostic object.
+    contents: `You are CrashIntercept, an autonomous backend reliability engineer agent. Analyze the provided crash log and output a diagnostic object.
 
 Service: ${service_name}
 Environment: ${environment}
@@ -101,4 +101,4 @@ ${raw_log}`,
   console.log(`🔥 [Firestore] Incident recorded under ID: ${docRef.id}\n`);
 }
 
-export default runDevPulseAgent;
+export default runCrashInterceptAgent;

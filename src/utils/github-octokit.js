@@ -14,9 +14,9 @@ const octokitClient = new Octokit({auth: process.env.GITHUB_TOKEN});
     const issue = await octokitClient.rest.issues.create({
       owner: process.env.GITHUB_OWNER,
       repo: process.env.GITHUB_REPO,
-      title: `[DevPulse Alert - ${analysis.severity}] ${analysis.title}`,
+      title: `[CrashIntercept Alert - ${analysis.severity}] ${analysis.title}`,
       labels: ["bug", "automated-issue", service_name.toLowerCase()],
-      body: `## 🤖 DevPulse Autonomous Incident Report
+      body: `## 🤖 CrashIntercept Autonomous Incident Report
 
 **Service:** \`${service_name}\` | **Environment:** \`${environment}\` | **Severity:** \`${analysis.severity}\`
 
@@ -44,7 +44,7 @@ ${raw_log}
 
 </details>
 
-*Generated automatically by DevPulse Agent via ${process.env.GEMINI_MODEL}.*`,
+*Generated automatically by CrashIntercept Agent via ${process.env.GEMINI_MODEL}.*`,
     });
 
     githubIssueUrl = issue.data.html_url;
